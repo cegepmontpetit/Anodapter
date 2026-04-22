@@ -4,6 +4,8 @@ available_categories=(
     $2
 )
 
+echo "${2} -> vfx" > ${2}_prompt_mapping.txt
+
 # 카테고리별 anomaly type은 내부 구조에서 자동 처리됨
 # prompt는 JSON 파일로 전달
 PROMPT_JSON_PATH="/workspace/code/prompt_list.json"
