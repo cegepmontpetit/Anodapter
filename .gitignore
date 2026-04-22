@@ -192,3 +192,11 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+#project-related:
+save_dir/
+object_mask/
+anodapter/checkpoint/
+datasets/
+*.txt
+

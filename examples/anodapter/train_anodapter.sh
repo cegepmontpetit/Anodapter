@@ -1,10 +1,12 @@
+dataset_name=$1
+
 available_categories=(
-    "bottle"
+    $2
 )
 
 # 카테고리별 anomaly type은 내부 구조에서 자동 처리됨
 # prompt는 JSON 파일로 전달
-PROMPT_JSON_PATH="/home/work/smk/anodapter_final/prompt_list.json"
+PROMPT_JSON_PATH="/workspace/code/prompt_list.json"
 
 # 시작 포트 번호
 START_PORT=29501
@@ -24,16 +26,15 @@ do
 
     echo "▶ Starting training for category: $category (port: $PORT)"
 
-    OUTPUT_DIR="/home/work/smk/anodapter_final/checkpoint/$category"
+    OUTPUT_DIR="/workspace/code/anodapter/checkpoint/$category"
 
     CUDA_VISIBLE_DEVICES=$GPU_LIST accelerate launch --main_process_port=$PORT "$SCRIPT_FILE" \
         --pretrained_model_name_or_path=CompVis/stable-diffusion-v1-4 \
         --train_text_encoder \
         --train_t2iadapter \
-        --generate_object_mask \
         --num_normal_limit=8 \
-        --instance_data_dir=/home/work/smk/MVTec_edit/$category \
-        --object_data_dir=/home/work/smk/anodapter_final/Object_mask/$category \
+        --instance_data_dir=/workspace/datasets/${dataset_name}/captures_drone_tiled \
+        --object_data_dir=/workspace/datasets/${dataset_name}/captures_drone_tiled/${category}/Object_mask \
         --prompt_json_path=$PROMPT_JSON_PATH \
         --output_dir=$OUTPUT_DIR \
         --instance_prompt="a photo of dqd" \
@@ -45,7 +46,8 @@ do
         --lr_scheduler="constant" \
         --lr_warmup_steps=0 \
         --checkpointing_steps=10000 \
-        --max_train_steps=20000
+        --max_train_steps=40000 
+        #--generate_object_mask 
 
     echo "✅ Finished training for category: $category"
 done

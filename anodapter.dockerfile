@@ -27,3 +27,10 @@ RUN apt update && \
         datasets==2.20.0 \
         huggingface-hub==0.23.3 \
         safetensors==0.4.5
+
+WORKDIR /workspace
+COPY docker_entrypoint.sh /workspace/docker_entrypoint.sh
+
+RUN chmod +x /workspace/docker_entrypoint.sh
+
+ENTRYPOINT ["bash", "/workspace/docker_entrypoint.sh"]

@@ -51,7 +51,7 @@ def main():
     os.makedirs(mask_dir, exist_ok=True)
     os.makedirs(img_dir, exist_ok=True)
 
-    object_mask_path = os.path.join(args.object_path, "0001.png")
+    object_mask_path = "/workspace/code/full_object_mask.png"
     if not os.path.exists(object_mask_path):
         raise FileNotFoundError(f"Object mask not found at {object_mask_path}")
 
