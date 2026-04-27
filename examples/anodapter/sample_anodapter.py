@@ -29,7 +29,6 @@ def main():
     parser.add_argument("--step", type=int, default=100)
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--model_path", type=str)
-    parser.add_argument("--object_path", type=str)
     parser.add_argument("--save_dir", type=str)
     parser.add_argument("--prompt_txt_path", type=str)
     parser.add_argument("--adapter_path", type=str, required=True)
