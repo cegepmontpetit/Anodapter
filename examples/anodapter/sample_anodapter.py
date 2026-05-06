@@ -6,6 +6,7 @@ import numpy as np
 import os
 import json
 import argparse
+import tqdm
 from diffusers import StableDiffusionAdapterPipeline, UNet2DConditionModel
 from transformers import CLIPTextModel, CLIPTokenizer, CLIPTextConfig
 from diffusers import AutoencoderKL, DDIMScheduler
@@ -24,7 +25,6 @@ def load_prompt_mapping(txt_path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--size", type=int, default=256)
     parser.add_argument("--num", type=int, default=1000)
     parser.add_argument("--step", type=int, default=100)
     parser.add_argument("--batch", type=int, default=8)
@@ -166,8 +166,7 @@ def main():
         feature_extractor=None,
     ).to("cuda")
     
-
-    for i in range(0, args.num, args.batch):
+    for i in tqdm.tqdm(range(0, args.num, args.batch)):
         prompts = [mask_prompt] * args.batch
         mask_output = mask_pipe(prompts, image=object_mask, height=height, width=width, num_inference_steps=args.step)
         mask_list = []

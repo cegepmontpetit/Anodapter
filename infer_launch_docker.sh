@@ -1,7 +1,7 @@
 #!/bin/bash
 
 usage() {
-    echo "Usage : $0 <defect_type> <n_step_model> <experiment_name>"
+    echo "Usage : $0 <defect_type> <n_step_model> <experiment_name> [nb_images] [nb_steps]"
     exit 1
 }
 
@@ -9,7 +9,7 @@ if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     usage
 fi
 
-if [ "$#" -ne 3 ]; then
+if [ "$#" -lt 3 ]; then
     usage
 fi
 
